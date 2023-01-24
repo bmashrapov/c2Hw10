@@ -60,13 +60,24 @@ public class Main {
         //ex4.2
         Supplier<Integer> randomNum1 = () -> ThreadLocalRandom.current().nextInt(100);
         System.out.println(randomNum1.get());
-//        public static <T, U> Function<T, U> ternaryOperator(Predicate<? super T> condition,
-//                Function<? super T, ? extends U> ifTrue,
-//                Function<? super T, ? extends U> ifFalse) {
-//            return input -> {
-//
-//            };
+        System.out.println("++++++++++++++++++++++++");
+        //ex5
+        Function<Integer, Integer> addTen = x -> x + 10;
+        Function<Integer, Integer> addTwenty = x -> x + 20;
+        Predicate<Integer> isEven = x -> x % 2 == 0;
+        Function<Integer, Integer> test = ternaryOperator(isEven, addTen, addTwenty);
+        test.apply(5);
+        test.apply(6);
     }
 
+    public static <T, U> Function<T, U> ternaryOperator(Predicate<? super T> condition,
+                                                        Function<? super T, ? extends U> ifTrue,
+                                                        Function<? super T, ? extends U> ifFalse) {
+        return input -> {
+            U result = condition.test(input) ? ifTrue.apply(input) : ifFalse.apply(input);
+            System.out.println(result);
+            return result;
+        };
+    }
 
 }
